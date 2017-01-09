@@ -26,15 +26,15 @@ export class ProductService {
             .map(res => res.json());
     }
 
-    deleteProduct(id: string) {
-        return this.http.delete('/api/product/' + id)
+    editProduct(product: Product) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put('/api/product/' + product._id, JSON.stringify(product), { headers: headers })
             .map(res => res.json());
     }
 
-    editProduct(context: any) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return this.http.put('/api/product/' + context.product._id, JSON.stringify(context.product), { headers: headers })
+    deleteProduct(id: string) {
+        return this.http.delete('/api/product/' + id)
             .map(res => res.json());
     }
 }

@@ -34,52 +34,51 @@ export class ProductComponent implements OnInit {
 
     this.productService.addProduct(this.product)
       .subscribe(
-        product => {
-          this.products.push(product);
-          this.product = new Product();
-        }
-      );
-  }
-
-  public deleteProduct(id: any): void {
-    let products = this.products;
-
-    this.productService.deleteProduct(id)
-      .subscribe(
-      data => {
-        if (data.n == 1) {
-          for (let i = 0; i < products.length; i++) {
-            if (products[i]._id == id) {
-              products.splice(i, 1);
-            }
-          }
-        }
+      product => {
+        this.products.push(product);
+        this.product = new Product();
       }
       );
   }
 
   public loadProduct(id: string): void {
-    for (let i in this.products) {
-      if (this.products[i]['_id'] == id) {
-        this.product = this.products[i];
-      }
-    }
+    let currentProduct = this.products.find(function (o) {
+      return o._id == id;
+    });
+
+    this.product = currentProduct;
   }
 
   public editProduct(event: Event): void {
     event.preventDefault();
-    // let products = this.products;
-    let context = this;
+    let products = this.products;
+    let product = this.product;
 
-    this.productService.editProduct(context)
+    this.productService.editProduct(product)
       .subscribe(
       (success: Product) => {
-        let oldProduct = context.products.find(function(o){
-          return o._id == context.product._id;
+        let oldProduct = products.find(function (o) {
+          return o._id == product._id;
         });
         oldProduct = success;
+      }
+      );
+    this.product = new Product();
+  }
 
-        context.product = new Product();
+  public deleteProduct(id: string): void {
+    let products = this.products;
+
+    this.productService.deleteProduct(id)
+      .subscribe(
+      success => {
+        if (success.n == 1) {
+          let oldProduct = products.find(function (o) {
+            return o._id == id;
+          });
+          let index = products.indexOf(oldProduct);
+          products.splice(index, 1);
+        }
       }
       );
   }
