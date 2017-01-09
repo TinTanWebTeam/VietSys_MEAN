@@ -10,6 +10,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { AsideComponent } from './components/aside/aside.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProductComponent } from './components/product/product.component';
+import { ProductTypeComponent } from './components/productType/productType.component';
 import { ProductService } from './services/product.service';
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ProductService } from './services/product.service';
     HeaderComponent,
     AsideComponent,
     FooterComponent,
-    ProductComponent
+    ProductComponent,
+    ProductTypeComponent
   ],
   imports: [
     BrowserModule,

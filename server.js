@@ -16,8 +16,18 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use('/', mainRoute);
+app.use(express.static(path.join(__dirname + '/client')));
+app.use(function (req, res, next) {
+    if (req.originalUrl.includes('api') || req.originalUrl.includes('auth')) {
+        next();
+    } else {
+        res.sendFile(__dirname + '/client/views/index.html');
+    }
+});
+
+// app.use('/', mainRoute);
 app.use('/api/product', productRoute);
+
 
 mongoose.connect(DB, function(err){
     if(err){
@@ -30,8 +40,6 @@ mongoose.connect(DB, function(err){
 app.set('views', __dirname + '/client/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile)
-
-app.use(express.static(path.join(__dirname + '/client')));
 
 app.listen(PORT, function(){
     console.log('Listening on port ' + PORT);

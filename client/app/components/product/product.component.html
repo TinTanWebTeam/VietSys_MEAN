@@ -1,24 +1,88 @@
-<ul>
-    <li *ngFor="let product of products">{{ product.name }}</li>
-</ul>
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">List Product</h1>
+</div>
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Footable - make HTML tables on smaller devices look awesome
+        </div>
+        <div>
+            <table class="table" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th data-breakpoints="xs">Name</th>
+                        <th>Description</th>
+                        <th>Product Type Id</th>
+                        <th data-breakpoints="xs">Active</th>
+                        <th data-breakpoints="xs sm">Created At</th>
+                        <th data-breakpoints="xs sm md" data-title="DOB">Updated At</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-expanded="true" *ngFor="let product of products">
+                        <td>{{ product._id }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.productType_id }}</td>
+                        <td>{{ product.active }}</td>
+                        <td>{{ product.created_at }}</td>
+                        <td>{{ product.updated_at }}</td>
+                        <td><button class="btn btn-warning" (click)="loadProduct(product._id)">Edit</button></td>
+                        <td><button class="btn btn-danger" (click)="deleteProduct(product._id)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <hr>
 
-<h1>Thêm mới sản phẩm</h1>
-<form>
+<form class="form-horizontal" method="get">
     <div class="form-group">
-        <label for="name">Tên</label>
-        <input type="text" [(ngModel)]="product.name" name="name" class="form-control">
+        <label class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" [(ngModel)]="product.name" name="name" class="form-control rounded">
+        </div>
     </div>
+
     <div class="form-group">
-        <label for="description">Mô tả</label>
-        <input type="text" [(ngModel)]="product.description" name="description" class="form-control">
+        <label class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-10">
+            <input type="text" [(ngModel)]="product.description" name="description" class="form-control rounded">
+        </div>
     </div>
+    
     <div class="form-group">
-        <label for="productType_id">Mã loại</label>
-        <input type="text" [(ngModel)]="product.productType_id" name="productType_id" class="form-control">
+        <label class="col-sm-2 control-label">Product Type Id</label>
+        <div class="col-sm-10">
+            <select [(ngModel)]="product.productType_id" name="productType_id" class="form-control m-b">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
     </div>
+
+    <div class="line line-dashed b-b line-lg pull-in"></div>
     <div class="form-group">
-        <button (click)="addProduct($event)">Thêm sản phẩm</button>
+        <div class="col-sm-4 col-sm-offset-2">
+            <button class="btn btn-default">Cancel</button>
+            <button (click)="addProduct($event)" class="btn btn-primary">Add new</button>
+            <button (click)="editProduct($event)" class="btn btn-primary">Edit</button>
+        </div>
     </div>
 </form>

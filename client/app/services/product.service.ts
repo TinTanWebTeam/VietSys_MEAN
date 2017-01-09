@@ -20,7 +20,7 @@ export class ProductService {
     }
 
     addProduct(newProduct: Product) {
-        var headers = new Headers();
+        let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return this.http.post('/api/product', JSON.stringify(newProduct), { headers: headers })
             .map(res => res.json());
@@ -31,10 +31,10 @@ export class ProductService {
             .map(res => res.json());
     }
 
-    updateStatus(product: Product) {
-        var headers = new Headers();
+    editProduct(context: any) {
+        let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.put('/api/product/' + product._id, JSON.stringify(product), { headers: headers })
+        return this.http.put('/api/product/' + context.product._id, JSON.stringify(context.product), { headers: headers })
             .map(res => res.json());
     }
 }

@@ -10,60 +10,45 @@ import { Product } from '../../models/product.model';
 })
 export class ProductComponent implements OnInit {
   public products: Product[];
-  public product: Product;
+  public product: Product = new Product();
 
   /**
    *
    */
   constructor(private productService: ProductService) {
     //called first time before the ngOnInit()
+
+  }
+
+  ngOnInit() {
+    //called after the constructor and called  after the first ngOnChanges() 
+
     this.productService.getProducts()
       .subscribe(products => {
         this.products = products;
       });
   }
 
-  ngOnInit() {
-    //called after the constructor and called  after the first ngOnChanges() 
-    this.product = {
-      name: "",
-      description: "",
-      active: true,
-      created_at: '10-01-2017',
-      updated_at: '10-01-2017'
-    };
-  }
-
-  addProduct(event: Event) {
+  public addProduct(event: Event): void {
     event.preventDefault();
-    var newProduct: Product = {
-      name: this.product.name,
-      description: this.product.description,
-      productType_id: this.product.productType_id,
-      active: true,
-      created_at: '10-01-2017',
-      updated_at: '10-01-2017'
-    }
 
-    this.productService.addProduct(newProduct)
+    this.productService.addProduct(this.product)
       .subscribe(
-      product => {
-        this.products.push(product);
-        this.product.name = '';
-        this.product.description = '';
-        this.product.productType_id = 0;
-      }
+        product => {
+          this.products.push(product);
+          this.product = new Product();
+        }
       );
   }
 
-  deleteTask(id: string) {
-    var products = this.products;
+  public deleteProduct(id: any): void {
+    let products = this.products;
 
     this.productService.deleteProduct(id)
       .subscribe(
       data => {
         if (data.n == 1) {
-          for (var i = 0; i < products.length; i++) {
+          for (let i = 0; i < products.length; i++) {
             if (products[i]._id == id) {
               products.splice(i, 1);
             }
@@ -73,7 +58,29 @@ export class ProductComponent implements OnInit {
       );
   }
 
-  updateStatus(product: Product) {
+  public loadProduct(id: string): void {
+    for (let i in this.products) {
+      if (this.products[i]['_id'] == id) {
+        this.product = this.products[i];
+      }
+    }
+  }
 
+  public editProduct(event: Event): void {
+    event.preventDefault();
+    // let products = this.products;
+    let context = this;
+
+    this.productService.editProduct(context)
+      .subscribe(
+      (success: Product) => {
+        let oldProduct = context.products.find(function(o){
+          return o._id == context.product._id;
+        });
+        oldProduct = success;
+
+        context.product = new Product();
+      }
+      );
   }
 }

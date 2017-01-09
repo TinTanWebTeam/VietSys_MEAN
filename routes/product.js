@@ -4,36 +4,33 @@ var Product = require('../models/product');
 
 // GET ALL
 router.get('/products', function (req, res) {
-    Product.find({}, function (err, resources) {
+    Product.find({}, function (err, products) {
         if (err) {
             res.send(err).status(404);
         } else {
-            res.send(resources).status(200);
+            res.send(products).status(200);
         }
     });
 });
 
 // GET ONE
 router.get('/:id', function (req, res) {
-    var id = req.params.id;
-    Product.findById(id, function (err, resource) {
+    Product.findById(req.params.id, function (err, product) {
         if (err) {
-            res.send(err);
+            res.send(err).status(404);
         } else {
-            var product = resource;
-            res.send(resource);
+            res.send(product).status(200);
         }
     });
 });
 
 // DELETE
 router.delete('/:id', function (req, res) {
-    var id = req.params.id;
-    Product.remove({ _id: id }, function (err, resource) {
+    Product.remove({ _id: req.params.id }, function (err, product) {
         if (err) {
-            res.send(err);
+            res.send(err).status(501);
         } else {
-            res.send(resource);
+            res.send(product).status(201);
         }
     });
 });
@@ -52,7 +49,10 @@ router.post('/', function (req, res) {
 
 // UPDATE
 router.put('/:id', function (req, res, next) {
-    var product = new Prodct(req.body);
+    Product.findByIdAndUpdate(req.params.id, { $set: new Product(req.body) }, { new: true }, function(err, product){
+        if (err) return handleError(err);
+        res.send(product).status(201);
+    });
 
 });
 
