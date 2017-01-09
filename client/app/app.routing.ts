@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { ProductComponent } from './product/product.component';
+import { ProductComponent } from './components/product/product.component';
 
 const APP_ROUTES: Routes = [
     { path: '', redirectTo: '/product', pathMatch: 'full' },

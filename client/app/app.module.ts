@@ -3,21 +3,20 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
-// import { routing } from './app.routing';
+import { routing } from './app.routing';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { AsideComponent } from './aside/aside.component';
-import { ContentComponent } from './content/content.component';
-import { FooterComponent } from './footer/footer.component';
-import { ProductComponent } from './product/product.component';
+import { HeaderComponent } from './components/header/header.component';
+import { AsideComponent } from './components/aside/aside.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ProductComponent } from './components/product/product.component';
+import { ProductService } from './services/product.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     AsideComponent,
-    ContentComponent,
     FooterComponent,
     ProductComponent
   ],
@@ -26,10 +25,10 @@ import { ProductComponent } from './product/product.component';
     FormsModule,
     HttpModule,
     JsonpModule,
-    // routing
+    routing
   ],
   providers: [
-    
+    ProductService
   ],
   bootstrap: [AppComponent]
 })

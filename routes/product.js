@@ -3,9 +3,9 @@ var router = express.Router();
 var Product = require('../models/product');
 
 // GET ALL
-router.get('/', function(req, res){
-    Product.find({}, function(err, resources){
-        if(err){
+router.get('/products', function (req, res) {
+    Product.find({}, function (err, resources) {
+        if (err) {
             res.send(err).status(404);
         } else {
             res.send(resources).status(200);
@@ -14,23 +14,23 @@ router.get('/', function(req, res){
 });
 
 // GET ONE
-router.get('/:id', function(req, res){
+router.get('/:id', function (req, res) {
     var id = req.params.id;
-    Product.findById(id, function(err, resource){
-        if(err) {
+    Product.findById(id, function (err, resource) {
+        if (err) {
             res.send(err);
         } else {
-            var human = resource;
+            var product = resource;
             res.send(resource);
         }
     });
 });
 
 // DELETE
-router.delete('/:id', function(req, res){
+router.delete('/:id', function (req, res) {
     var id = req.params.id;
-    Product.remove({_id: id}, function(err, resource){
-        if(err){
+    Product.remove({ _id: id }, function (err, resource) {
+        if (err) {
             res.send(err);
         } else {
             res.send(resource);
@@ -39,15 +39,21 @@ router.delete('/:id', function(req, res){
 });
 
 // ADD
-router.post('/', function(req, res){
-    var human = new Product(req.body);
-    human.save(function(err, resource){
-        if(err){
+router.post('/', function (req, res) {
+    var product = new Product(req.body);
+    product.save(function (err, resource) {
+        if (err) {
             res.send(err).status(501);
         } else {
             res.json(resource).status(201);
         }
     });
+});
+
+// UPDATE
+router.put('/:id', function (req, res, next) {
+    var product = new Prodct(req.body);
+
 });
 
 module.exports = router;

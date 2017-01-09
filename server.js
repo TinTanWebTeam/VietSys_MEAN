@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use('/', mainRoute);
-app.use('/product', productRoute);
+app.use('/api/product', productRoute);
 
 mongoose.connect(DB, function(err){
     if(err){
