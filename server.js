@@ -1,12 +1,14 @@
-const PORT = 8000 || process.env.PORT;
-var mainRoute = require('./routes/index');
-var productRoute = require('./routes/product');
 var DB = "mongodb://localhost/vietsys";
 var mongoose = require('mongoose');
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var morgan = require('morgan');
+
+const PORT = 8000 || process.env.PORT;
+var mainRoute = require('./routes/index');
+var productRoute = require('./routes/product');
+var userRoute = require('./routes/user');
 
 var app = express();
 
@@ -27,6 +29,7 @@ app.use(function (req, res, next) {
 
 // app.use('/', mainRoute);
 app.use('/api/product', productRoute);
+app.use('/api/user', userRoute);
 
 
 mongoose.connect(DB, function(err){

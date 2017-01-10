@@ -1,6 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var Product = require('../models/product');
+var Product = require('../models/product-model');
+
+var ProductMiddleware = require('../middlewares/product-middleware');
+
+router.use(function (req, res, next) {
+    if (ProductMiddleware.checkMiddleware(req)) {
+        return next();
+    }
+    return res.send().status(501);
+});
 
 // GET ALL
 router.get('/products', function (req, res) {
@@ -49,7 +58,7 @@ router.post('/', function (req, res) {
 
 // UPDATE
 router.put('/:id', function (req, res, next) {
-    Product.findByIdAndUpdate(req.params.id, { $set: new Product(req.body) }, { new: true }, function(err, product){
+    Product.findByIdAndUpdate(req.params.id, { $set: new Product(req.body) }, { new: true }, function (err, product) {
         if (err) return handleError(err);
         res.send(product).status(201);
     });
