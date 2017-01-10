@@ -4,6 +4,15 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 var User = require('../models/user-model');
 
+var UserMiddleware = require('../middlewares/user-middleware');
+
+router.use(function (req, res, next) {
+    if (UserMiddleware.checkMiddleware(req)) {
+        return next();
+    }
+    return res.send().status(501);
+});
+
 router.post('/login', function (req, res) {
     var username = req.body['username'];
     var password = req.body['password'];
