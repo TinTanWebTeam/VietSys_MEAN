@@ -3,6 +3,7 @@ var router = express.Router();
 
 var jwt = require('jsonwebtoken');
 var User = require('../models/user-model');
+var Role = require('../models/role-model');
 
 var UserMiddleware = require('../middlewares/user-middleware');
 
@@ -29,6 +30,8 @@ router.post('/login', function (req, res) {
                 return res.send({ msg: "Tài khoản hoặc mật khẩu không đúng!" }).status(404);
             }
 
+            // var array_role = Role.find({ _id: user.})
+
             var token = jwt.sign({ _id: user._id, username: user.username }, 'tintansoft');
             return res.send({ token: token }).status(201);
         }, function (err) {
@@ -40,8 +43,24 @@ router.post('/login', function (req, res) {
         });
 });
 
+router.get('/authenticate', function(req, res){
+
+});
+
 router.post('/check-login', function (req, res) {
 
 });
+
+router.post('/test', function(req, res){
+    let token = req.body['token'];
+    try {
+        var decoded = jwt.verify(token, 'tintansoft');
+        // var decoded = jwt.decode(token);
+        // var decoded = jwt.decode(token, { complete: true });
+        res.send(decoded).status(200);
+    } catch (err) {
+        res.send(err).status(501);
+    }
+})
 
 module.exports = router;

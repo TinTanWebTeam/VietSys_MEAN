@@ -37,7 +37,7 @@ for (var i = 0; i < products.length; i++) {
     products[i].save(function (err, result) {
         if (err) {
             console.log(err);
-            continue;
+            return;
         }
         done++;
         if (done === products.length) {

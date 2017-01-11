@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
 import { routing } from './app.routing';
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { HttpClientService } from './services/httpClient/httpClient.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,6 +14,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductTypeComponent } from './components/productType/productType.component';
 import { ProductService } from './services/product.service';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import { ProductService } from './services/product.service';
     AsideComponent,
     FooterComponent,
     ProductComponent,
-    ProductTypeComponent
+    ProductTypeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +34,8 @@ import { ProductService } from './services/product.service';
     routing
   ],
   providers: [
+    AuthenticationService,
+    HttpClientService,
     ProductService
   ],
   bootstrap: [AppComponent]

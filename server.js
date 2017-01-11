@@ -1,4 +1,4 @@
-var DB = "mongodb://localhost/vietsys";
+var DB = "mongodb://localhost:27017/vietsys";
 var mongoose = require('mongoose');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -23,7 +23,7 @@ app.use(function (req, res, next) {
     if (req.originalUrl.includes('api') || req.originalUrl.includes('auth')) {
         next();
     } else {
-        res.sendFile(__dirname + '/client/views/index.html');
+        res.sendFile(__dirname + '/client/index.html');
     }
 });
 

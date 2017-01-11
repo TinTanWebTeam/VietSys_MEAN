@@ -20,7 +20,7 @@ for (var i = 0; i < users.length; i++) {
     users[i].save(function (err, result) {
         if (err) {
             console.log(err);
-            continue;
+            return;
         }
         done++;
         if (done === users.length) {
