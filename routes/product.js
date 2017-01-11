@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var Product = require('../models/product-model');
+var Product = require('../models/product.model');
 
-var ProductMiddleware = require('../middlewares/product-middleware');
+var ProductMiddleware = require('../middlewares/product.middleware');
 
 router.use(function (req, res, next) {
     if (ProductMiddleware.checkMiddleware(req)) {

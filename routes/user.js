@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 var jwt = require('jsonwebtoken');
-var User = require('../models/user-model');
-var Role = require('../models/role-model');
+var User = require('../models/user.model');
+var Role = require('../models/role.model');
+var UserRole = require('../models/user_role.model');
 
-var UserMiddleware = require('../middlewares/user-middleware');
+var UserMiddleware = require('../middlewares/user.middleware');
 
 router.use(function (req, res, next) {
     if (UserMiddleware.checkMiddleware(req)) {
@@ -30,7 +31,10 @@ router.post('/login', function (req, res) {
                 return res.send({ msg: "Tài khoản hoặc mật khẩu không đúng!" }).status(404);
             }
 
-            // var array_role = Role.find({ _id: user.})
+            var array_role = UserRole.find({ user_id: user._id });
+            if(array_role.length > 0){
+                
+            }
 
             var token = jwt.sign({ _id: user._id, username: user.username }, 'tintansoft');
             return res.send({ token: token }).status(201);
