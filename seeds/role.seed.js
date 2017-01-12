@@ -6,6 +6,10 @@ mongoose.connect('localhost:27017/vietsys');
 
 var roles = [
     new Role({
+        name: 'Dashboard',
+        description: 'Dashboard'
+    }),
+    new Role({
         name: 'Product',
         description: 'Product'
     }),

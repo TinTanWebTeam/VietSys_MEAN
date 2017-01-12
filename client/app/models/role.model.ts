@@ -1,7 +1,7 @@
 export class Role {
-    _id?: number;
-    name: string;
+    _id?:         string;
+    name:         string;
     description?: string;
-    created_at?: string;
-    updated_at?: string;
+    created_at?:  string;
+    updated_at?:  string;
 }

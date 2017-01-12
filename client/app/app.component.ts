@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewContainerRef, OnInit } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthenticationService } from './services/authentication/authentication.service';
 
 @Component({
   moduleId: module.id,
@@ -7,7 +10,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() { }
+  private authenticate: boolean = false;
+  private _authSubscription: Subscription;
+
+  constructor(private vRef: ViewContainerRef, private router: Router, private authenticationService: AuthenticationService) {
+    this._authSubscription = this.authenticationService.authenticate$.subscribe(
+      status => {
+        this.authenticate = Boolean(status);
+        if (!status) {
+          router.navigate(['/login']);
+        }
+      }
+    );
+
+    router.events.subscribe(
+      event => {
+        if (event instanceof NavigationStart) {
+          if (event.url == '/login') {
+            if(this.authenticate){
+              this.router.navigate(['/dashboard']);  
+            }
+          } else {
+            if (!this.authenticate) {
+              this.router.navigate(['/login']);
+            }
+          }
+        }
+        // NavigationEnd
+        // NavigationCancel
+        // NavigationError
+        // RoutesRecognized
+      }
+    )
+  }
 
   ngOnInit() {
   }

@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductComponent } from './components/product/product.component';
 import { ProductTypeComponent } from './components/productType/productType.component';
 import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const APP_ROUTES: Routes = [
-    { path: '', redirectTo: 'product', pathMatch: 'full' },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    { path: 'dashboard', component: DashboardComponent },
     { path: 'product', component: ProductComponent },
     { path: 'product-type', component: ProductTypeComponent },
     { path: 'login', component: LoginComponent }

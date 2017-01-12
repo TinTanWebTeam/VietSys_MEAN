@@ -9,6 +9,7 @@ const PORT = 8000 || process.env.PORT;
 var mainRoute = require('./routes/index');
 var productRoute = require('./routes/product');
 var userRoute = require('./routes/user');
+var testRoute = require('./routes/test');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use(function (req, res, next) {
 // app.use('/', mainRoute);
 app.use('/api/product', productRoute);
 app.use('/api/user', userRoute);
+app.use('/api/test', testRoute);
 
 
 mongoose.connect(DB, function(err){

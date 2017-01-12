@@ -15,6 +15,7 @@ import { ProductComponent } from './components/product/product.component';
 import { ProductTypeComponent } from './components/productType/productType.component';
 import { ProductService } from './services/product.service';
 import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { LoginComponent } from './components/login/login.component';
     FooterComponent,
     ProductComponent,
     ProductTypeComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

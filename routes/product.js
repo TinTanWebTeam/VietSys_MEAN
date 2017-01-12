@@ -1,14 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var Product = require('../models/product.model');
+let express = require('express');
+let router = express.Router();
+let Product = require('../models/product.model');
 
-var ProductMiddleware = require('../middlewares/product.middleware');
+let ProductMiddleware = require('../middlewares/product.middleware');
 
 router.use(function (req, res, next) {
-    if (ProductMiddleware.checkMiddleware(req)) {
-        return next();
-    }
-    return res.send().status(501);
+    ProductMiddleware.checkMiddleware(req, res, next);
 });
 
 // GET ALL
@@ -46,7 +43,7 @@ router.delete('/:id', function (req, res) {
 
 // ADD
 router.post('/', function (req, res) {
-    var product = new Product(req.body);
+    let product = new Product(req.body);
     product.save(function (err, resource) {
         if (err) {
             res.send(err).status(501);
