@@ -63,6 +63,8 @@ export class ProductComponent implements OnInit {
     event.preventDefault();
     let products = this.products;
     let product = this.product;
+    console.log(products);
+    console.log(product);
 
     this.httpClientService.put('/api/product/', product).subscribe(
       (success: Response) => {

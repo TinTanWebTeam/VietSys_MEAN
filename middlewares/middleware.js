@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
 const Role = require('../models/role.model');
 const UserRole = require('../models/user_role.model');
+const NODE_ENV = require('../utilities/NODE_ENV.json');
 
 let middelware = {
-    
-    checkMiddleware: (req, res, next) => {
+
+    checkMiddleware: (req, res, next, roleName) => {
         let token = req.headers['authorization'].substr(7, req.headers['authorization'].length);
-        let decoded = jwt.verify(token, 'tintansoft');
+        let decoded = jwt.verify(token, NODE_ENV['secretOrPublicKey']);
         let user_id = decoded['_id'];
 
         UserRole.find({ user_id: user_id }).then(function (array_role_user) {
@@ -20,7 +21,7 @@ let middelware = {
                 return res.send({ msg: "!" }).status(404);
             }
 
-            Role.findOne({ name: 'Product' }).then((role) => {
+            Role.findOne({ name: roleName }).then((role) => {
                 if (role == null) {
                     res.send("NULL").status(501);
                 }

@@ -1,19 +1,13 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
+const NODE_ENV = require('../utilities/NODE_ENV.json');
 
-var jwt = require('jsonwebtoken');
-var User = require('../models/user.model');
-var Role = require('../models/role.model');
-var UserRole = require('../models/user_role.model');
+const jwt = require('jsonwebtoken');
+let User = require('../models/user.model');
+let Role = require('../models/role.model');
+let UserRole = require('../models/user_role.model');
 
-var UserMiddleware = require('../middlewares/user.middleware');
-
-router.use(function (req, res, next) {
-    if (UserMiddleware.checkMiddleware(req)) {
-        return next();
-    }
-    return res.send().status(501);
-});
+let Middleware = require('../middlewares/middleware');
 
 router.post('/login', function (req, res) {
     var username = req.body['username'];
@@ -39,12 +33,14 @@ router.post('/login', function (req, res) {
             return res.send({ msg: "Tài khoản hoặc mật khẩu không đúng!" }).status(404);
         }
 
-        var token = jwt.sign({ _id: user._id, username: user.username, created_at: user.created_at, updated_at: user.updated_at }, 'tintansoft');
+        var token = jwt.sign(
+            { _id: user._id, username: user.username, created_at: user.created_at, updated_at: user.updated_at }
+            , NODE_ENV['secretOrPrivateKey']
+            , { expiresIn: '1h' }
+        );
         console.log("TOKENNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
         console.log(token);
         return res.send({ token: token }).status(201);
-
-        
     }, function (err) {
         console.log(err);
         return res.send(err).status(404);
@@ -60,7 +56,7 @@ router.get('/authentication', function (req, res) {
     console.log("TOKENNNNNNNNNNNNNNNNNNN");
     console.log(token);
     try {
-        var decoded = jwt.verify(token, 'tintansoft');
+        var decoded = jwt.verify(token, NODE_ENV['secretOrPublicKey']);
         console.log("DECODEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
         console.log(decoded);
 
@@ -109,6 +105,10 @@ router.get('/authentication', function (req, res) {
     } catch (err) {
         res.send(err).status(501);
     }
+});
+
+router.use(function (req, res, next) {
+    Middleware.checkMiddleware(req, res, next, 'User');
 });
 
 module.exports = router;

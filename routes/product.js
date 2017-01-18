@@ -2,10 +2,11 @@ let express = require('express');
 let router = express.Router();
 let Product = require('../models/product.model');
 
-let ProductMiddleware = require('../middlewares/product.middleware');
+let Middleware = require('../middlewares/middleware');
+let colors = require('colors');
 
 router.use(function (req, res, next) {
-    ProductMiddleware.checkMiddleware(req, res, next);
+    Middleware.checkMiddleware(req, res, next, 'Product');
 });
 
 // GET ALL
@@ -55,6 +56,8 @@ router.post('/', function (req, res) {
 
 // UPDATE
 router.put('/:id', function (req, res, next) {
+    console.log("Hello".red);
+    console.log(req.body);
     Product.findByIdAndUpdate(req.params.id, { $set: new Product(req.body) }, { new: true }, function (err, product) {
         if (err) return handleError(err);
         res.send(product).status(201);

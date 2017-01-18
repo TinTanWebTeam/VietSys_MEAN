@@ -16,6 +16,14 @@ export class HttpClientService {
             status => {
                 if (status) {
                     this.createHeader();
+                    // this.get('/api/user/authentication').subscribe(
+                    //     (success: Response) => {
+                    //     },
+                    //     (error: Response) => {
+                    //         this.authenticationService.clearAuthLocalStorage();
+                    //         this.authenticationService.notifyAuthenticate(false);
+                    //     }
+                    // )
                 } else {
                     this.removeHeader();
                 }

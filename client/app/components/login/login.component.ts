@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 
                 /* SAVE ROLE */
                 let array_role = success.json()['role'];
-                console.log(array_role);
+                this.authenticationService.authenticateRole = [];
                 for (let i = 0; i < array_role.length; i++) {
                     this.authenticationService.authenticateRole.push(array_role[i]);
                 }
