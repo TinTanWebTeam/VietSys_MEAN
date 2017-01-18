@@ -16,6 +16,9 @@ export class AppComponent implements OnInit {
   constructor(private vRef: ViewContainerRef, private router: Router, private authenticationService: AuthenticationService) {
     this._authSubscription = this.authenticationService.authenticate$.subscribe(
       status => {
+        console.log("%c AppComponent", "color: blue");
+        console.log(status);
+        console.log("%c ------------", "color: blue");
         this.authenticate = Boolean(status);
         if (!status) {
           router.navigate(['/login']);

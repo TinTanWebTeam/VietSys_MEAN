@@ -14,16 +14,49 @@ export class HttpClientService {
         this._http = http;
         this._authSubscription = authenticationService.authenticate$.subscribe(
             status => {
+                console.log("%c HttpClientService", "color: green");
+                console.log(status);
                 if (status) {
                     this.createHeader();
-                    // this.get('/api/user/authentication').subscribe(
-                    //     (success: Response) => {
-                    //     },
-                    //     (error: Response) => {
-                    //         this.authenticationService.clearAuthLocalStorage();
-                    //         this.authenticationService.notifyAuthenticate(false);
-                    //     }
-                    // )
+                    console.log("%c Tạo header", "color: green");
+                    console.log("%c Role", "color: green");
+                    console.log(authenticationService.authenticateRole);
+                    console.log("%c User", "color: green");
+                    console.log(authenticationService.authenticateUser);
+                    this.get('/api/user/authentication').subscribe(
+                        (success: Response) => {
+                            /* SAVE USER */
+                            authenticationService.authenticateUser._id = success.json()['_id'];
+                            authenticationService.authenticateUser.username = success.json()['username'];
+                            authenticationService.authenticateUser.created_at = success.json()['created_at'];
+                            authenticationService.authenticateUser.updated_at = success.json()['updated_at'];
+
+                            /* SAVE ROLE */
+                            let array_role = success.json()['role'];
+                            authenticationService.authenticateRole = [];
+                            for (let i = 0; i < array_role.length; i++) {
+                                authenticationService.authenticateRole.push(array_role[i]);
+                            }
+
+                            /* SAVE AUTH */
+                            // authenticationService.createAuthLocalStorage();
+                            // this.authenticationService.notifyAuthenticate(true);
+
+                            console.log("%c Role", "color: green");
+                            console.log(authenticationService.authenticateRole);
+                            console.log("%c User", "color: green");
+                            console.log(authenticationService.authenticateUser);
+
+                            console.log("%c Current URL: " + router.url, "color: yellow; background: black");
+                            console.log("%c -----------------", "color: green");
+                            router.navigate([router.url]);
+                        },
+                        (error: Response) => {
+                            authenticationService.clearAuthLocalStorage();
+                            authenticationService.notifyAuthenticate(false);
+                        }
+                    )
+                    
                 } else {
                     this.removeHeader();
                 }

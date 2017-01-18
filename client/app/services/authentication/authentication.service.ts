@@ -18,16 +18,20 @@ export class AuthenticationService {
 
     checkAuthLocalStorage(): void {
         try {
+            console.log("%c AuthenticationService", "color: red");
             if (localStorage.getItem('_token')) {
+                console.log("%c Đã có token trong localStorage", "color:red");
                 /* GET AUTH FROM LOCAL STORAGE */
                 this.getAuthLocalStorage();
                 /* NOTIFY */
                 this.notifyAuthenticate(true);
             } else {
+                console.log("%c Không có token trong localStorage", "color:red");
                 this.clearAuthLocalStorage();
                 /* NOTIFY */
                 this.notifyAuthenticate(false);
             }
+            console.log("%c ------------------------------", "color:red");
         } catch (exception) {
             /* CLEAR AUTH IN LOCAL STORAGE */
             this.clearAuthLocalStorage();

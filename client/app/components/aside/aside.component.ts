@@ -16,6 +16,9 @@ export class AsideComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService) {
     this._authSubscription = this.authenticationService.authenticate$.subscribe(
       status => {
+        console.log("%c Navigation", "background: green; color: white");
+        console.log(status);
+        
         if (status) {
           this.roles = this.authenticationService.authenticateRole.map(function (o) {
             return o.name;
@@ -23,6 +26,9 @@ export class AsideComponent implements OnInit {
         } else {
           this.roles = [];
         }
+
+        console.log(this.roles);
+        console.log("%c ----------", "background: green; color: white");
       }
     )
   }

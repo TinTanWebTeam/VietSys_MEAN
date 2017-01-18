@@ -13,7 +13,6 @@ import { AsideComponent } from './components/aside/aside.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductTypeComponent } from './components/productType/productType.component';
-import { ProductService } from './services/product.service';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
@@ -37,8 +36,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
   ],
   providers: [
     AuthenticationService,
-    HttpClientService,
-    ProductService
+    HttpClientService
   ],
   bootstrap: [AppComponent]
 })

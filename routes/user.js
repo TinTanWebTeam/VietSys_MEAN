@@ -1,12 +1,12 @@
 let express = require('express');
 let router = express.Router();
+const jwt = require('jsonwebtoken');
+const colors = require('colors');
 const NODE_ENV = require('../utilities/NODE_ENV.json');
 
-const jwt = require('jsonwebtoken');
 let User = require('../models/user.model');
 let Role = require('../models/role.model');
 let UserRole = require('../models/user_role.model');
-
 let Middleware = require('../middlewares/middleware');
 
 router.post('/login', function (req, res) {
