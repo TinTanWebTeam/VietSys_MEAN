@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProductService } from '../../services/product.service';
 import { ProductType } from '../../models/product_type.model';
 
 @Component({
@@ -13,7 +12,7 @@ export class ProductTypeComponent implements OnInit {
     /**
      *
      */
-    constructor(private productService: ProductService) {
+    constructor() {
         //called first time before the ngOnInit()
 
     }

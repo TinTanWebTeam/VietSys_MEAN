@@ -15,6 +15,7 @@ import { ProductComponent } from './components/product/product.component';
 import { ProductTypeComponent } from './components/productType/productType.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CanActivateViaProductType } from './middlewares/CanActivateViaProductType.middleware';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
   ],
   providers: [
     AuthenticationService,
-    HttpClientService
+    HttpClientService,
+    CanActivateViaProductType
   ],
   bootstrap: [AppComponent]
 })
